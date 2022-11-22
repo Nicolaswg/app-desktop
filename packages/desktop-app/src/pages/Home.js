@@ -8,6 +8,8 @@ import { Box } from "@blend-ui/core";
 
 import gql from "graphql-tag";
 
+import { recentApps } from "@prifina-apps/utils/src/lib/helperFunctions";
+
 import {
   updateActivity,
   getPrifinaUserQuery,
@@ -255,6 +257,17 @@ const Content = ({ clientHandler, currentUser, activeUser }) => {
                                 "APP CLICK ",
                                 prifinaApps.current[appIcon.name].route,
                               );
+
+                              // saving app instance to local storage
+                              const appInstance = {
+                                id: appIcon.name,
+                                route: prifinaApps.current[appIcon.name].route,
+                                app: appIcon,
+                              }
+
+                              recentApps(appInstance)
+                              
+                              console.log("APP CLICK 1", appIcon);
                               navigate("/" + prifinaApps.current[appIcon.name].route, { replace: true });
                               //return redirect("/" + prifinaApps.current[appIcon.name].route);
                               //window.location.replace("/" + prifinaApps.current[appIcon.name].route);
