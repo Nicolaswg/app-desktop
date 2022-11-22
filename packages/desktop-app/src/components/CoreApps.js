@@ -435,48 +435,6 @@ const CoreApps = props => {
     }
   }, [settingsReady]);
 
-  // Saving widgets data into local Storage
-
-  useEffect(() => {
-  
-  // Declaring function for saving
-  const LocalStorageWidgetData = async () => {
-    const widgetStorage = [];
-
-    const session = await Auth.currentSession(); 
-    const prifinaID = session.idToken.payload["custom:prifina"];
-    console.log('test-id', prifinaID);
-
-    const currentPrifinaUser = await getPrifinaUserQuery(
-      GRAPHQL,
-      prifinaID,
-    );
-    console.log('test-user', currentPrifinaUser);
-
-    const prifinaWidgets = await listAppMarketQuery(GRAPHQL, {
-      filter: { appType: { eq: 2 } },
-    });
-    console.log('test-widgets', prifinaWidgets);
-
-    prifinaWidgets.data.listAppMarket.items.forEach((widget, index) => {
-      const manifest = JSON.parse(widget.manifest);
-      
-      widgetStorage[index] = {
-        id: widget.id,
-        name: widget.name,
-        title: widget.title,
-        shortDescription: manifest.shortDescription,
-        version: widget.version,
-        image: manifest.screenshots[0],
-        category: manifest.category,
-        icon: manifest.icon,
-      }
-      console.log('test-storage', widgetStorage);
-    })
-    
-   } 
-   LocalStorageWidgetData();
-  },[])
 
   // possibly obsolete code...messaging demo may have used this
   const remoteUser = opts => {
