@@ -50,3 +50,17 @@ export function checkUrl(url) {
 //   ); // fragment locator
 //   return !!pattern.test(str);
 // }
+
+export function recentApps(obj) {
+  const recentAppTracker = [];
+  const oldRecentAppTracker = JSON.parse(localStorage.getItem("recentApps"));
+
+  if(oldRecentAppTracker) {
+    oldRecentAppTracker.unshift(obj);
+    localStorage.setItem("recentApps", JSON.stringify(oldRecentAppTracker));
+  }
+  else {
+    recentAppTracker.unshift(obj);
+    localStorage.setItem("recentApps", JSON.stringify(recentAppTracker));
+  }
+}
