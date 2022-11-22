@@ -109,6 +109,7 @@ const CoreApps = props => {
 
   const [appReady, setAppReady] = useState(false);
   const [settingsReady, setSettingsReady] = useState(false);
+  const [savedWidgets, setSavedWidgets] = useState([]);
 
   Auth.configure(AUTHConfig);
 
@@ -130,6 +131,7 @@ const CoreApps = props => {
     });
     return client;
   };
+
 
   useEffect(() => {
     async function fetchData() {
@@ -278,9 +280,8 @@ const CoreApps = props => {
 
             let widgetCounts = {};
 
-
             console.info("INSTALLED WIDGETS ", installedWidgets, widgetData);
-
+            
             data = installedWidgets.map((w, wi) => {
               if (widgetCounts?.[w.id]) {
                 widgetCounts[w.id]++;
@@ -433,6 +434,49 @@ const CoreApps = props => {
       setAppReady(true);
     }
   }, [settingsReady]);
+
+  // Saving widgets data into local Storage
+
+  useEffect(() => {
+  
+  // Declaring function for saving
+  const LocalStorageWidgetData = async () => {
+    const widgetStorage = [];
+
+    const session = await Auth.currentSession(); 
+    const prifinaID = session.idToken.payload["custom:prifina"];
+    console.log('test-id', prifinaID);
+
+    const currentPrifinaUser = await getPrifinaUserQuery(
+      GRAPHQL,
+      prifinaID,
+    );
+    console.log('test-user', currentPrifinaUser);
+
+    const prifinaWidgets = await listAppMarketQuery(GRAPHQL, {
+      filter: { appType: { eq: 2 } },
+    });
+    console.log('test-widgets', prifinaWidgets);
+
+    prifinaWidgets.data.listAppMarket.items.forEach((widget, index) => {
+      const manifest = JSON.parse(widget.manifest);
+      
+      widgetStorage[index] = {
+        id: widget.id,
+        name: widget.name,
+        title: widget.title,
+        shortDescription: manifest.shortDescription,
+        version: widget.version,
+        image: manifest.screenshots[0],
+        category: manifest.category,
+        icon: manifest.icon,
+      }
+      console.log('test-storage', widgetStorage);
+    })
+    
+   } 
+   LocalStorageWidgetData();
+  },[])
 
   // possibly obsolete code...messaging demo may have used this
   const remoteUser = opts => {
