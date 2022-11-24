@@ -79,6 +79,7 @@ const Content = ({ clientHandler, currentUser, activeUser }) => {
         console.log(prifinaApps);
 
         const installedAppsJSON = JSON.parse(currentUser.installedApps);
+        console.log('INSTALLED APPS 1',installedAppsJSON);
         installedAppsJSON.forEach(app => {
           prifinaApps.current[app] = prifinaAppsJSON[app];
         });
@@ -162,7 +163,7 @@ const Content = ({ clientHandler, currentUser, activeUser }) => {
       const appImports = installedApps.map(app => {
         return import(`../components/${app}Icon`);
       });
-
+      
       Promise.all(appImports).then(components => {
         console.log("COMPONENT ", components);
         const appComponents = components.map((Component, i) => {
@@ -262,7 +263,6 @@ const Content = ({ clientHandler, currentUser, activeUser }) => {
                               const appInstance = {
                                 id: appIcon.name,
                                 route: prifinaApps.current[appIcon.name].route,
-                                app: appIcon,
                               }
 
                               recentApps(appInstance)

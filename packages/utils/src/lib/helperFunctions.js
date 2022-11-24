@@ -1,3 +1,4 @@
+
 export function checkUrl(url) {
   return new Promise(function (resolve, reject) {
     console.log("CHECK URL", url);
@@ -64,3 +65,21 @@ export function recentApps(obj) {
     localStorage.setItem("recentApps", JSON.stringify(recentAppTracker));
   }
 }
+
+// export function AppsIcons(name) {
+//   //switch case of 7 names and print the name
+//   switch (name) {
+//     case "Settings":
+//       return "settings";
+//     case "DataConsole":
+//       return "data cloud";
+//     case "AppMarket":
+//       return "app market";
+//     case "DisplayApp":
+//       return "display app";
+//     case "DevConsole":
+//       return "app studio";
+//     default:
+//       return "default";
+//   }   
+// }

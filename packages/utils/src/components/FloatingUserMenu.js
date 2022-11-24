@@ -32,6 +32,8 @@ import gql from "graphql-tag";
 import { listSystemNotificationsByDateQuery } from "../graphql/api";
 import { newSystemNotification } from "../graphql/subscriptions";
 
+// import { AppsIcons } from "../lib/helperFunctions.js";
+
 import PropTypes from "prop-types";
 
 const positionVariation = props => {
@@ -197,6 +199,15 @@ const Badge = styled.span`
   font-weight: 700;
 `;
 
+const RecentAppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: #f5f8f7;
+  `;
+
+
 const UserMenuContextProvider = ({
   offset = "15px",
   id,
@@ -232,6 +243,8 @@ const UserMenuContextProvider = ({
   const prifinaQraphQLHandler = useRef(null);
   const subscriptionHandler = useRef(null);
 
+  // Creating User recent app storage
+  const [currentApps, setCurrentApps] = useState([]);
   //({ AppIcon, title, date, msg, footer })
 
   const notificationList = async () => {
@@ -278,7 +291,7 @@ const UserMenuContextProvider = ({
       onHome();
     } else {
       let buttons = iconButtons.map(ic => false);
-
+  
       buttons[i] = true;
       if (i === 1) {
 
@@ -405,6 +418,13 @@ const UserMenuContextProvider = ({
     theme,
     id: menuId,
   };
+
+  useEffect(() => {
+    const storageApps = JSON.parse(localStorage.getItem("recentApps"));
+    setCurrentApps(storageApps);
+    console.log('USER MENU APPS', storageApps)
+    
+  },[]);
 
   return (
     <UserMenuContext.Provider value={menuContext}>
@@ -563,7 +583,18 @@ const UserMenuContextProvider = ({
                       </div>
                     )}
 
-                    {iconButtons[2] && <div>{userMenu.options.RecentApps}</div>}
+                    {iconButtons[2] && <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      gap: '10px',
+                      backgroundColor: "green",
+                      margin: '10px',
+                    }}>{currentApps.map((item) => (
+                    <RecentAppWrapper key={item.id}>
+                      <div>
+                        {AppsIcons(item.id)}
+                      </div>
+                    </RecentAppWrapper>))}</div>}
                   </MenuBase>
                 </React.Fragment>
               )}
