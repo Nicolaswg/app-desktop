@@ -1,3 +1,5 @@
+import React from 'react';
+import { SettingsIcon } from '../components/assets/Icons';
 
 export function checkUrl(url) {
   return new Promise(function (resolve, reject) {
@@ -39,18 +41,18 @@ export function checkUrl(url) {
   });
 }
 
-// export function checkUrl(str) {
-//   var pattern = new RegExp(
-//     "^(https?:\\/\\/)?" + // protocol
-//       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-//       "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-//       "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-//       "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-//       "(\\#[-a-z\\d_]*)?$",
-//     "i",
-//   ); // fragment locator
-//   return !!pattern.test(str);
-// }
+ // export function checkUrl(str) {
+ //   var pattern = new RegExp(
+ //     "^(https?:\\/\\/)?" + // protocol
+ //       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+ //       "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+ //       "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+ //       "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+ //       "(\\#[-a-z\\d_]*)?$",
+ //     "i",
+ //   ); // fragment locator
+ //   return !!pattern.test(str);
+ // }
 
 export function recentApps(obj) {
   const recentAppTracker = [];
@@ -66,20 +68,19 @@ export function recentApps(obj) {
   }
 }
 
-// export function AppsIcons(name) {
-//   //switch case of 7 names and print the name
-//   switch (name) {
-//     case "Settings":
-//       return "settings";
-//     case "DataConsole":
-//       return "data cloud";
-//     case "AppMarket":
-//       return "app market";
-//     case "DisplayApp":
-//       return "display app";
-//     case "DevConsole":
-//       return "app studio";
-//     default:
-//       return "default";
-//   }   
-// }
+export function AppsIcons(name) {
+  //switch case of 7 names and print the name
+  switch (name) {
+    case "Settings":
+      return (<AppsIcons title={name} icon={SettingsIcon} />);
+    case "DataConsole":
+      return "data cloud";
+    case "AppMarket":
+      return "app market";
+    case "DisplayApp":
+      return "display app";
+    case "DevConsole":
+      return "app studio";
+    default:
+      return "default";   }   
+}
