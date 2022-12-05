@@ -32,10 +32,6 @@ import gql from "graphql-tag";
 import { listSystemNotificationsByDateQuery } from "../graphql/api";
 import { newSystemNotification } from "../graphql/subscriptions";
 
-
-
-// import { AppsIcons } from "../lib/helperFunctions.js";
-
 import PropTypes from "prop-types";
 
 const positionVariation = props => {
@@ -207,8 +203,7 @@ const RecentAppWrapper = styled.div`
   gap: 10px;
   padding: 10px;
   background: #f5f8f7;
-  `;
-
+`;
 
 const UserMenuContextProvider = ({
   offset = "15px",
@@ -279,7 +274,6 @@ const UserMenuContextProvider = ({
       },
     );
 
-
     return cardList;
   };
   const iconClick = (e, i) => {
@@ -293,16 +287,14 @@ const UserMenuContextProvider = ({
       onHome();
     } else {
       let buttons = iconButtons.map(ic => false);
-  
+
       buttons[i] = true;
       if (i === 1) {
-
         notificationList().then(list => {
           console.log("NEW LIST...", list);
           setNotificationCards(list);
           setIconButtons(buttons);
         });
-
       } else {
         setIconButtons(buttons);
       }
@@ -337,7 +329,6 @@ const UserMenuContextProvider = ({
         console.log("NEW2 LIST...", list);
         setNotificationCards(list);
       });
-
     }
   }, [isOpen]);
   useEffect(() => {
@@ -404,9 +395,9 @@ const UserMenuContextProvider = ({
     prifinaQraphQLHandler.current = handler;
   }, []);
 
-  const notificationSelectChange = e => { };
-  const notificationButtonClick = e => { };
-  const notificationCloseClick = e => { };
+  const notificationSelectChange = e => {};
+  const notificationButtonClick = e => {};
+  const notificationCloseClick = e => {};
   menuContext.current = {
     userMenu,
     show,
@@ -424,9 +415,8 @@ const UserMenuContextProvider = ({
   useEffect(() => {
     const storageApps = JSON.parse(localStorage.getItem("recentApps"));
     setCurrentApps(storageApps);
-    console.log('USER MENU APPS', storageApps)
-    
-  },[]);
+    console.log("USER MENU APPS", storageApps);
+  }, []);
 
   return (
     <UserMenuContext.Provider value={menuContext}>
@@ -585,18 +575,25 @@ const UserMenuContextProvider = ({
                       </div>
                     )}
 
-                    {iconButtons[2] && <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-evenly',
-                      gap: '10px',
-                      backgroundColor: "green",
-                      margin: '10px',
-                    }}>{currentApps.map((item) => (
-                    <RecentAppWrapper key={item.id}>
-                      <div>
-                        {AppsIcons(item.id)}
+                    {iconButtons[2] && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                          gap: "10px",
+                          backgroundColor: "green",
+                          margin: "10px",
+                        }}
+                      >
+                        {currentApps.map(item => (
+                          <RecentAppWrapper key={item.id}>
+                            <div>
+                              <SettingsIcon />
+                            </div>
+                          </RecentAppWrapper>
+                        ))}
                       </div>
-                    </RecentAppWrapper>))}</div>}
+                    )}
                   </MenuBase>
                 </React.Fragment>
               )}
